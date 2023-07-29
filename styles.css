@@ -1,0 +1,28 @@
+body {
+    background-color: white;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.title {
+    font-family: 'Nanum Myeongjo', serif;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.author {
+    font-family: 'Nanum Myeongjo', serif;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.poem {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+}
