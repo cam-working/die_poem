@@ -1,17 +1,80 @@
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:ital,wght@700&family=Cormorant+Garamond:wght@400&display=swap" rel="stylesheet">
-
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Random Poem Web Applet</title>
-        <link rel="stylesheet" type="text/css" href="styles.css">
-    </head>
-    <body>
-        <div id="app" class="centered" onclick="rollDice()">
-            <h1 id="title" class="title">Title</h1>
-            <p id="author" class="author">Author</p>
-        </div>
-        <script src="script.js"></script>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry Game Show</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .doors {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .door {
+            width: 100px;
+            height: 200px;
+            margin: 0 20px;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .prize {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Maybe a poem but alternatively maybe a game show</h1>
+    <h3>Pick a door and win the prize shown behind the door.</h3>
+
+    <div class="doors">
+        <div class="door" onclick="pickDoor(1)">Door #1</div>
+        <div class="door" onclick="pickDoor(2)">Door #2</div>
+        <div class="door" onclick="pickDoor(3)">Door #3</div>
+    </div>
+
+    <div id="result"></div>
+    <button id="switchButton" style="display: none;" onclick="switchDoor()">Switch Door</button>
+    <button id="finalButton" style="display: none;" onclick="finalPick()">Final Pick</button>
+
+    <div id="prize1" class="prize">Prize behind door 1: <br> Stanza 1 of the poem.</div>
+    <div id="prize2" class="prize">Prize behind door 2: <br> Stanza 2 of the poem.</div>
+    <div id="prize3" class="prize">Prize behind door 3: <br> Stanza 3 of the poem.</div>
+
+    <script>
+        let userChoice = null;
+        let revealedDoor = null;
+
+        function pickDoor(door) {
+            userChoice = door;
+            revealOtherDoor();
+            document.getElementById('switchButton').style.display = 'block';
+        }
+
+        function revealOtherDoor() {
+            const otherDoors = [1, 2, 3].filter(d => d !== userChoice);
+            revealedDoor = otherDoors[Math.floor(Math.random() * otherDoors.length)];
+            document.getElementById('result').innerHTML = `Prize behind door ${revealedDoor}: <br> ${document.getElementById('prize' + revealedDoor).innerHTML}`;
+        }
+
+        function switchDoor() {
+            userChoice = [1, 2, 3].filter(d => d !== userChoice && d !== revealedDoor)[0];
+            document.getElementById('switchButton').style.display = 'none';
+            document.getElementById('finalButton').style.display = 'block';
+        }
+
+        function finalPick() {
+            document.getElementById('finalButton').style.display = 'none';
+            document.getElementById('result').innerHTML = `You picked door ${userChoice}: <br> ${document.getElementById('prize' + userChoice).innerHTML}`;
+        }
+    </script>
+</body>
 </html>
